@@ -11,20 +11,17 @@
         grid-column: (1 / span) 7
 
     .header
-        padding: 0.75px
-        font-size: 1.25px
+        display: flex
+        justify-content: space-between
+        align-items: center
+        padding: 10px 15px 15px 10px
         grid-column: (1 / span) 7
 
         span
             font-size: 16px
-            flex: 1
-            text-align: center
+            line-height: 16px
 
         button
-            background: var(--white)
-            margin: 0 1px
-            padding: 0.25px 0.5px
-            cursor: pointer
 
             &:hover
                 background: var(--black-400)
@@ -50,7 +47,7 @@
             color: var(--black-100)
 
         &.active
-            color: var(--red)
+            color: var(--color-red)
 
         &::before
             content: ""

@@ -13,10 +13,22 @@ export default {
     },
     setAddTaskState(state, payLoad) {
       state.addTaskState = payLoad;
+    },
+    changeTask(state, { id, checked }) {
+      state.tasks.map(item => {
+        if (item.id === id) {
+          item.complete = checked;
+        }
+      });
+    },
+    addTask(state, payLoad) {
+      state.tasks.push(payLoad);
     }
   },
   actions: {
     getTasks: ({ commit }, payLoad) => {
+      console.log("13123123");
+
       try {
         setTimeout(() => {
           commit(
@@ -27,6 +39,19 @@ export default {
       } catch (e) {
         console.log(e);
       }
+    },
+    changeTask: ({ commit }, payLoad) => {
+      try {
+        setTimeout(() => {
+          commit("changeTask", payLoad);
+        }, 200);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    addTask: ({ commit }, payLoad) => {
+      commit("addTask", payLoad);
+      commit("setAddTaskState", true);
     }
   },
   getters: {

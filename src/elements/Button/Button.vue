@@ -1,16 +1,18 @@
 <template>
-  <button :class="`btn btn_${color}`" @click="$emit('click')"><span><slot /></span></button>
+  <button :class="`btn btn_${color}`" @click="$emit('click')">
+    <span><slot /></span>
+  </button>
 </template>
 
 <script>
-import "./style.sass"
+import "./style.sass";
 export default {
   props: {
     color: {
       type: String,
       required: false,
-      default: 'blue'
+      default: "blue"
     }
   }
-}
+};
 </script>
