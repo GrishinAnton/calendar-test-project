@@ -9,14 +9,14 @@
     <template v-else>
       <div class="add-task__parts">
         <input
-        class="input"
+          class="input"
           type="text"
           :value="time"
           @input="timeChange"
           placeholder="Время"
         />
         <input
-        class="input"
+          class="input"
           :disabled="!timeValid"
           type="text"
           v-model.trim="text"
@@ -36,8 +36,8 @@
 
 <script>
 import Button from "./../../../elements/Button/Button";
-import "./style.sass"
-import "./../../../assets/styles/elements/_input.sass"
+import "./style.sass";
+import "./../../../assets/styles/elements/_input.sass";
 
 export default {
   components: {
@@ -66,14 +66,14 @@ export default {
 
       let promise = new Promise(resolve => {
         setTimeout(() => {
-          resolve(this.timeValidation(value))         
+          resolve(this.timeValidation(value));
         }, 2000);
       });
 
       try {
         var result = await promise;
         console.log(result);
-        
+
         if (result) {
           this.timeValid = true;
         } else {
@@ -83,17 +83,14 @@ export default {
         console.log(e);
       }
     },
-    timeValidation(time) {   
+    timeValidation(time) {
       console.log(time);
-         
+
       if (time.length === 5) {
         return this.timeValidationPattern.test(time);
-      } 
-      
+      }
+
       return false;
-   
-      
-      
     },
     saveTask() {
       this.$emit("btnHandler", {

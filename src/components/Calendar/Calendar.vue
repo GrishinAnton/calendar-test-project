@@ -3,11 +3,19 @@
     <header class="calendar__header">
       <p class="title title_bold">{{ currentMonthLabel }} {{ currentYear }}</p>
       <div class="calendar__header-buttons">
-        <button class="button-arrow" @click="previousMonth"><span>&lt;</span></button>
-        <button class="button-arrow" @click="nextMonth"><span>&gt;</span></button>
+        <button class="button-arrow" @click="previousMonth">
+          <span>&lt;</span>
+        </button>
+        <button class="button-arrow" @click="nextMonth">
+          <span>&gt;</span>
+        </button>
       </div>
     </header>
-    <p class="calendar__headings" v-for="(dayLabel, index) in dayLabels" :key="index">
+    <p
+      class="calendar__headings"
+      v-for="(dayLabel, index) in dayLabels"
+      :key="index"
+    >
       {{ dayLabel }}
     </p>
     <div v-for="day in dates" class="day" :class="dayClassObj(day)">
@@ -35,7 +43,7 @@ import {
 } from "date-fns";
 
 import "./style.sass";
-import "./../../assets/styles/elements/_arrow-button.sass"
+import "./../../assets/styles/elements/_arrow-button.sass";
 
 const DAY_LABELS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 const MONTH_LABELS = [
