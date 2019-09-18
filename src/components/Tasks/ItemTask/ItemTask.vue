@@ -1,5 +1,5 @@
 <template>
-  <div class="task-item">
+  <li class="task-item">
     <label :for="`checkbox_${task.id}`">
       <input
         type="checkbox"
@@ -7,16 +7,13 @@
         :checked="task.complete"
         @change="change"
       />
-      <div class="task-item__description">
-        <span class="task-item__time">
-          {{ task.time }}
-        </span>
-        <span class="task-item__task">
-          {{ task.text }}
-        </span>
-      </div>
+      <span class="checkmark"></span>
+      <p class="title title_bold">
+        <span>{{ task.time }} </span>
+        <span>{{ task.text }}</span>
+      </p>
     </label>
-  </div>
+  </li>
 </template>
 
 <script>

@@ -27,8 +27,6 @@ export default {
   },
   actions: {
     getTasks: ({ commit }, payLoad) => {
-      console.log("13123123");
-
       try {
         setTimeout(() => {
           commit(
@@ -50,8 +48,12 @@ export default {
       }
     },
     addTask: ({ commit }, payLoad) => {
-      commit("addTask", payLoad);
-      commit("setAddTaskState", true);
+      try {
+        commit("addTask", taskFactory(payLoad));
+        commit("setAddTaskState", true);
+      } catch (e) {
+        console.log(e);
+      }
     }
   },
   getters: {
@@ -59,3 +61,13 @@ export default {
     getAddTaskState: state => state.addTaskState
   }
 };
+
+function taskFactory({ time, text, date }) {
+  return {
+    id: String(Math.floor(Math.random() * 100)),
+    time: time,
+    text: text,
+    complete: false,
+    date: date
+  };
+}

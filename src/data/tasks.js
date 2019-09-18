@@ -3,7 +3,7 @@ export default {
     {
       id: "1",
       date: new Date(),
-      time: "15:30",
+      time: "15:10",
       text: "Позвонить жене",
       complete: false
     },
@@ -17,7 +17,7 @@ export default {
     {
       id: "3",
       date: new Date("2019, 09, 16"),
-      time: "15:20",
+      time: "15:10",
       text: "Позвонить теще",
       complete: false
     },

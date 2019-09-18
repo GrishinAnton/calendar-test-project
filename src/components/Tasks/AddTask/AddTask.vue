@@ -9,12 +9,14 @@
     <template v-else>
       <div class="add-task__parts">
         <input
+        class="input"
           type="text"
           :value="time"
           @input="timeChange"
           placeholder="Время"
         />
         <input
+        class="input"
           :disabled="!timeValid"
           type="text"
           v-model.trim="text"
@@ -23,11 +25,7 @@
         <p v-if="errorValid">{{ errorValidationMessage }}</p>
       </div>
       <div class="add-task__control">
-        <Button
-          color="blue"
-          @click="$emit('btnHandler', { event: 'cancelTask' })"
-          >Отмена</Button
-        >
+        <Button color="blue" @click="cancelTask">Отмена</Button>
         <Button :disabled="!(time && text)" color="blue" @click="saveTask"
           >Сохранить</Button
         >
@@ -38,6 +36,9 @@
 
 <script>
 import Button from "./../../../elements/Button/Button";
+import "./style.sass"
+import "./../../../assets/styles/elements/_input.sass"
+
 export default {
   components: {
     Button
@@ -60,16 +61,19 @@ export default {
   },
   methods: {
     async timeChange(e) {
-      const value = e.target.value;
+      let value = e.target.value;
       this.time = value;
 
       let promise = new Promise(resolve => {
-        setTimeout(() => resolve(this.timeValidation(value)), 2000);
+        setTimeout(() => {
+          resolve(this.timeValidation(value))         
+        }, 2000);
       });
 
       try {
-        let result = await promise;
-
+        var result = await promise;
+        console.log(result);
+        
         if (result) {
           this.timeValid = true;
         } else {
@@ -79,8 +83,17 @@ export default {
         console.log(e);
       }
     },
-    timeValidation(time) {
-      return this.timeValidationPattern.test(time);
+    timeValidation(time) {   
+      console.log(time);
+         
+      if (time.length === 5) {
+        return this.timeValidationPattern.test(time);
+      } 
+      
+      return false;
+   
+      
+      
     },
     saveTask() {
       this.$emit("btnHandler", {
@@ -88,6 +101,10 @@ export default {
         time: this.time,
         text: this.text
       });
+      this.clear();
+    },
+    cancelTask() {
+      this.$emit("btnHandler", { event: "cancelTask" });
       this.clear();
     },
     clear() {

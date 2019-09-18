@@ -1,12 +1,14 @@
 <template>
-  <div class="tasks">
-    <p class="text text_title">События</p>
-    <itemTask
-      v-for="task in getCurrentDateTasks"
-      :task="task"
-      :key="task.id"
-      @change="change"
-    ></itemTask>
+  <div class="tasks-container">
+    <p class="title title_bold tasks-container_title">События</p>
+    <ul class="task-items">
+      <itemTask
+        v-for="task in getCurrentDateTasks"
+        :task="task"
+        :key="task.id"
+        @change="change"
+      ></itemTask>
+    </ul>
     <addTask :taskState="getAddTaskState" @btnHandler="btnHandler"></addTask>
   </div>
 </template>
@@ -52,21 +54,16 @@ export default {
           this.$store.commit("tasks/setAddTaskState", true);
           return;
         case "saveTask":
-          this.$store.dispatch("tasks/addTask", this.taskFactory(time, text));
+          this.$store.dispatch("tasks/addTask", {
+            time,
+            text,
+            date: this.currentDate
+          });
           return;
       }
     },
     change(task) {
       this.$store.dispatch("tasks/changeTask", task);
-    },
-    taskFactory(time, text) {
-      return {
-        id: String(Math.floor(Math.random() * 100)),
-        time: time,
-        text: text,
-        complete: false,
-        date: this.currentDate
-      };
     }
   }
 };

@@ -1,17 +1,15 @@
 <template>
   <div class="calendar">
-    <header class="header">
-      <span class="header__title"
-        >{{ currentMonthLabel }} {{ currentYear }}</span
-      >
-      <div class="header__buttons">
-        <button @click="previousMonth">&lt;</button>
-        <button @click="nextMonth">&gt;</button>
+    <header class="calendar__header">
+      <p class="title title_bold">{{ currentMonthLabel }} {{ currentYear }}</p>
+      <div class="calendar__header-buttons">
+        <button class="button-arrow" @click="previousMonth"><span>&lt;</span></button>
+        <button class="button-arrow" @click="nextMonth"><span>&gt;</span></button>
       </div>
     </header>
-    <div class="headings" v-for="(dayLabel, index) in dayLabels" :key="index">
+    <p class="calendar__headings" v-for="(dayLabel, index) in dayLabels" :key="index">
       {{ dayLabel }}
-    </div>
+    </p>
     <div v-for="day in dates" class="day" :class="dayClassObj(day)">
       <button @click="setSelectedDate(day)">
         <span>{{ day.date | formatDateToDay }}</span>
@@ -37,6 +35,7 @@ import {
 } from "date-fns";
 
 import "./style.sass";
+import "./../../assets/styles/elements/_arrow-button.sass"
 
 const DAY_LABELS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 const MONTH_LABELS = [
@@ -141,6 +140,7 @@ export default {
       if (!day.isCurrentMonth) {
         const selectedMonth = getMonth(this.selectedDate);
         this.currDateCursor = setMonth(this.currDateCursor, selectedMonth);
+        this.$emit("changeMonth", selectedMonth);
       }
     }
   },
