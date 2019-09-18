@@ -1,28 +1,44 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <div class="container container_tasks">
+      <calendar v-model="currentDate" :tasks="getTasks" />
+      <tasks :tasks="getTasks" :currentDate="currentDate"/>
+    </div>    
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import calendar from "./components/Calendar/Calendar";
+import tasks from "./components/Tasks/Tasks";
+import { format, isSameDay } from "date-fns";
 
 export default {
-  name: "app",
   components: {
-    HelloWorld
+    calendar,
+    tasks
+  },
+  data() {
+    return {
+      currentDate: new Date(),
+    };
+  },
+  computed: {
+    getTasks(){
+      return this.$store.getters["tasks/getTasks"]
+    }
+  },
+  methods: {
+    filterTasksByDate(){
+      return this.tasks.filter(item => isSameDay(item.date, this.curr))
+    }
+  },
+  watch: {
+    currentDate: {
+      handler: function(val){
+        this.$store.dispatch("tasks/getTasks", val)        
+      },
+      immediate: true
+    } 
   }
 };
 </script>
-
-<style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

@@ -1,0 +1,79 @@
+.calendar
+    background-color: var(--white)
+    border-radius: 3px
+    display: grid
+    grid-template-columns: repeat(7, 1fr)
+    width: 300px
+    padding: 0.25px 0.5px 1px 0.5px
+    box-shadow: var(--element-box-shadow)
+
+    .top
+        grid-column: (1 / span) 7
+
+    .header
+        padding: 0.75px
+        font-size: 1.25px
+        grid-column: (1 / span) 7
+
+        span
+            font-size: 16px
+            flex: 1
+            text-align: center
+
+        button
+            background: var(--white)
+            margin: 0 1px
+            padding: 0.25px 0.5px
+            cursor: pointer
+
+            &:hover
+                background: var(--black-400)
+                transition: background 150ms
+
+    .headings
+        align-items: center
+        display: flex
+        justify-content: center
+
+    .day
+        align-items: center
+        display: flex
+        justify-content: center
+        color: var(--black-200)
+        font-size: 1px
+        border-radius: 2px
+
+        &.selected
+            border: 1px solid var(--blue-grey-100)
+
+        &.current
+            color: var(--black-100)
+
+        &.active
+            color: var(--red)
+
+        &::before
+            content: ""
+            display: inline-block
+            height: 0
+            padding-bottom: 100%
+            width: 1px
+
+        button
+            width: 100%
+            height: 100%
+            color: inherit
+            background: transparent
+
+            span:hover
+                padding: 10px
+                width: 15px
+                height: 15px
+                border-radius: 50%
+                background: var(--color-blue)
+                color: var(--color-white)
+                transition: background 150ms
+
+    .today
+        background: var(--black-400)
+        border-radius: 2px
