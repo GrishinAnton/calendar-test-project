@@ -48,5 +48,13 @@ describe("My First Test", () => {
     cy.wait(2500);
 
     cy.get("[data-cy='input-text']").should("not.be.disabled");
+
+    cy.get("[data-cy='input-time']").clear();
+    cy.wait(500);
+    cy.get("[data-cy='input-time']").type("00:00");
+
+    cy.wait(2500);
+
+    cy.get("[data-cy='input-text']").should("not.be.disabled");
   });
 });

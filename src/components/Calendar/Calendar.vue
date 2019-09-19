@@ -18,7 +18,12 @@
     >
       {{ dayLabel }}
     </p>
-    <div v-for="day in dates" class="day" :class="dayClassObj(day)">
+    <div
+      v-for="(day, index) in dates"
+      class="day"
+      :class="dayClassObj(day)"
+      :key="index"
+    >
       <button @click="setSelectedDate(day)">
         <span>{{ day.date | formatDateToDay }}</span>
       </button>

@@ -29,7 +29,11 @@
       </div>
       <div class="add-task__control">
         <Button color="blue" @click="cancelTask">Отмена</Button>
-        <Button :disabled="!(time && text)" color="blue" @click="saveTask" data-cy="save-task-button"
+        <Button
+          :disabled="!(time && text)"
+          color="blue"
+          @click="saveTask"
+          data-cy="save-task-button"
           >Сохранить</Button
         >
       </div>
@@ -57,7 +61,7 @@ export default {
       time: "",
       text: "",
       timeValid: false,
-      timeValidationPattern: /[0-2][0-9]\:[0-5][0-9]/g,
+      timeValidationPattern: /[0-2][0-9]:[0-5][0-9]/,
       errorValid: false,
       errorValidationMessage: "Формат ввода времени 01:25"
     };
@@ -91,7 +95,6 @@ export default {
     },
     timeValidation(time) {
       let valid = this.timeValidationPattern.test(time);
-      this.timeValidationPattern.lastIndex = 0;
       return valid;
     },
     saveTask() {

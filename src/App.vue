@@ -43,12 +43,12 @@ export default {
     },
     changeDay(date) {
       this.currentDate = date;
-      this.$store.dispatch("tasks/getTask", date)
+      this.$store.dispatch("tasks/getTask", date);
     }
   },
   async created() {
     await this.$store.dispatch("tasks/getTasks", this.currentDate);
-    this.$store.dispatch("tasks/getTask", this.currentDate)
+    this.$store.dispatch("tasks/getTask", this.currentDate);
   }
 };
 </script>
