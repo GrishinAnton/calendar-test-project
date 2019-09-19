@@ -2,12 +2,11 @@
   <div id="app">
     <div class="container container_tasks">
       <calendar
-        :startDate="currentDate"
         @changeMonth="changeMonth"
         @changeDay="changeDay"
         :tasks="getTasks"
       />
-      <tasks :tasks="getTasks" :currentDate="currentDate" />
+      <tasks :tasks="getCurrentDayTasks" :currentDate="currentDate" />
     </div>
   </div>
 </template>
@@ -30,6 +29,9 @@ export default {
   computed: {
     getTasks() {
       return this.$store.getters["tasks/getTasks"];
+    },
+    getCurrentDayTasks() {
+      return this.$store.getters["tasks/getCurrentDayTasks"];
     }
   },
   methods: {
@@ -41,10 +43,12 @@ export default {
     },
     changeDay(date) {
       this.currentDate = date;
+      this.$store.dispatch("tasks/getTask", date)
     }
   },
-  created() {
-    this.$store.dispatch("tasks/getTasks", this.currentDate);
+  async created() {
+    await this.$store.dispatch("tasks/getTasks", this.currentDate);
+    this.$store.dispatch("tasks/getTask", this.currentDate)
   }
 };
 </script>

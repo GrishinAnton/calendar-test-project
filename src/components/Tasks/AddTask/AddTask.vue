@@ -64,15 +64,18 @@ export default {
       let value = e.target.value;
       this.time = value;
 
-      let promise = new Promise(resolve => {
-        setTimeout(() => {
-          resolve(this.timeValidation(value));
-        }, 2000);
-      });
+      function delay(ms) {
+        return new Promise(resolve => {
+          setTimeout(resolve, ms);
+        });
+      }
 
       try {
-        var result = await promise;
-        console.log(result);
+        let result;
+
+        if (value.length === 5) {
+          result = await delay(2000).then(() => this.timeValidation(value));
+        }
 
         if (result) {
           this.timeValid = true;
@@ -84,13 +87,9 @@ export default {
       }
     },
     timeValidation(time) {
-      console.log(time);
-
-      if (time.length === 5) {
-        return this.timeValidationPattern.test(time);
-      }
-
-      return false;
+      let valid = this.timeValidationPattern.test(time);
+      this.timeValidationPattern.lastIndex = 0;
+      return valid;
     },
     saveTask() {
       this.$emit("btnHandler", {

@@ -1,15 +1,20 @@
 import tasks from "../../data/tasks";
-import { isSameMonth } from "date-fns";
+import { isSameDay, isSameMonth } from "date-fns";
+import { dispatch } from "rxjs/internal/observable/range";
 
 export default {
   namespaced: true,
   state: {
     tasks: [],
+    currentDayTasks: [],
     addTaskState: true
   },
   mutations: {
     setTasks(state, payLoad) {
       state.tasks = payLoad;
+    },
+    currentDayTasks(state, payLoad) {
+      state.currentDayTasks = payLoad;
     },
     setAddTaskState(state, payLoad) {
       state.addTaskState = payLoad;
@@ -28,12 +33,20 @@ export default {
   actions: {
     getTasks: ({ commit }, payLoad) => {
       try {
-        setTimeout(() => {
-          commit(
-            "setTasks",
-            tasks.tasks.filter(item => isSameMonth(item.date, payLoad))
-          );
-        }, 200);
+        commit(
+          "setTasks",
+          tasks.tasks.filter(item => isSameMonth(item.date, payLoad))
+        );
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    getTask: async ({ state, commit }, payLoad) => {
+      try {
+        commit(
+          "currentDayTasks",
+          state.tasks.filter(item => isSameDay(item.date, payLoad))
+        );
       } catch (e) {
         console.log(e);
       }
@@ -47,9 +60,10 @@ export default {
         console.log(e);
       }
     },
-    addTask: ({ commit }, payLoad) => {
+    addTask: async ({ commit, dispatch }, payLoad) => {
       try {
-        commit("addTask", taskFactory(payLoad));
+        await commit("addTask", taskFactory(payLoad));
+        await dispatch("getTask", payLoad.date);
         commit("setAddTaskState", true);
       } catch (e) {
         console.log(e);
@@ -58,7 +72,8 @@ export default {
   },
   getters: {
     getTasks: state => state.tasks,
-    getAddTaskState: state => state.addTaskState
+    getAddTaskState: state => state.addTaskState,
+    getCurrentDayTasks: state => state.currentDayTasks
   }
 };
 
