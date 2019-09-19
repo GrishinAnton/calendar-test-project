@@ -1,6 +1,5 @@
 import tasks from "../../data/tasks";
 import { isSameDay, isSameMonth } from "date-fns";
-import { dispatch } from "rxjs/internal/observable/range";
 
 export default {
   namespaced: true,

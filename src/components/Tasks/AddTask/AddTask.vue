@@ -4,6 +4,7 @@
       v-if="taskState"
       @click="$emit('btnHandler', { event: 'addTask' })"
       color="blue"
+      data-cy="add-task-button"
       >Добавить</Button
     >
     <template v-else>
@@ -14,6 +15,7 @@
           :value="time"
           @input="timeChange"
           placeholder="Время"
+          data-cy="input-time"
         />
         <input
           class="input"
@@ -21,12 +23,13 @@
           type="text"
           v-model.trim="text"
           placeholder="Текст"
+          data-cy="input-text"
         />
         <p v-if="errorValid">{{ errorValidationMessage }}</p>
       </div>
       <div class="add-task__control">
         <Button color="blue" @click="cancelTask">Отмена</Button>
-        <Button :disabled="!(time && text)" color="blue" @click="saveTask"
+        <Button :disabled="!(time && text)" color="blue" @click="saveTask" data-cy="save-task-button"
           >Сохранить</Button
         >
       </div>

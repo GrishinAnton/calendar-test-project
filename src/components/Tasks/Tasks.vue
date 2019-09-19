@@ -1,7 +1,7 @@
 <template>
   <div class="tasks-container">
     <p class="title title_bold tasks-container_title">События</p>
-    <ul class="task-items">
+    <ul class="task-items" data-cy="task-items">
       <itemTask
         v-for="task in getCurrentDateTasks"
         :task="task"
