@@ -19,10 +19,10 @@
       {{ dayLabel }}
     </p>
     <div
-      v-for="(day, index) in dates"
+      v-for="day in dates"
       class="day"
       :class="dayClassObj(day)"
-      :key="index"
+      :key="day.index"
     >
       <button @click="setSelectedDate(day)">
         <span>{{ day.date | formatDateToDay }}</span>
@@ -114,12 +114,13 @@ export default {
       endDate = addDays(endDate, daysNeededForNextMonth);
 
       return eachDayOfInterval({ start: startDate, end: endDate }).map(
-        date => ({
+        (date, index) => ({
           date,
           isCurrentMonth: isSameMonth(cursorDate, date),
           isToday: isToday(date),
           isSelected: isSameDay(this.selectedDate, date),
-          isActive: this.tasks.some(x => isSameDay(x.date, date))
+          isActive: this.tasks.some(x => isSameDay(x.date, date)),
+          id: index
         })
       );
     }

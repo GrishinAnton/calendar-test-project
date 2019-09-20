@@ -24,7 +24,9 @@
           v-model.trim="text"
           placeholder="Текст"
           data-cy="input-text"
+          @keyup.enter="saveTask"
         />
+
         <p v-if="errorValid">{{ errorValidationMessage }}</p>
       </div>
       <div class="add-task__control">

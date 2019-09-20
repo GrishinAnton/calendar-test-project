@@ -24,9 +24,6 @@ export default {
           item.complete = checked;
         }
       });
-    },
-    addTask(state, payLoad) {
-      state.tasks.push(payLoad);
     }
   },
   actions: {
@@ -61,7 +58,9 @@ export default {
     },
     addTask: async ({ commit, dispatch }, payLoad) => {
       try {
-        await commit("addTask", taskFactory(payLoad));
+        tasks.tasks.push(taskFactory(payLoad));
+
+        await dispatch("getTasks", payLoad.date);
         await dispatch("getTask", payLoad.date);
         commit("setAddTaskState", true);
       } catch (e) {

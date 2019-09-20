@@ -4,28 +4,28 @@ export default {
       id: "1",
       date: new Date(),
       time: "15:10",
-      text: "Позвонить жене",
+      text: "Позвонить коллеге",
       complete: false
     },
     {
       id: "2",
       date: new Date(),
       time: "15:20",
-      text: "Позвонить теще",
+      text: "Купить хлеба",
       complete: true
     },
     {
       id: "3",
       date: new Date("2019, 09, 16"),
-      time: "15:10",
-      text: "Позвонить теще",
+      time: "12:10",
+      text: "Посмотреть танцы на ТНТ",
       complete: false
     },
     {
       id: "4",
       date: new Date("2019, 08, 16"),
-      time: "15:20",
-      text: "Позвонить теще",
+      time: "18:20",
+      text: "Купить молока",
       complete: false
     }
   ]
