@@ -14,7 +14,6 @@
 <script>
 import calendar from "./components/Calendar/Calendar";
 import tasks from "./components/Tasks/Tasks";
-import { isSameDay } from "date-fns";
 
 export default {
   components: {
@@ -35,9 +34,6 @@ export default {
     }
   },
   methods: {
-    filterTasksByDate() {
-      return this.tasks.filter(item => isSameDay(item.date, this.curr));
-    },
     changeMonth(date) {
       this.$store.dispatch("tasks/getTasks", date);
     },
