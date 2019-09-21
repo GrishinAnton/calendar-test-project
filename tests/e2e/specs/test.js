@@ -2,58 +2,68 @@ const TIMER_VALIDATION = 2000;
 const EXAMPLE_TIME_TEST_VALIDATION = [":10", "30:10", "40:", "50:123"];
 
 describe("My First Test", () => {
+  const taskItems = () => cy.get("[data-cy='task-items']");
+  const saveTaskButton = () => cy.get("[data-cy='save-task-button']");
+  const inputTime = () => cy.get("[data-cy='input-time']");
+  const inputText = () => cy.get("[data-cy='input-text']");
+  const openAddTaskContainer = () => cy.get("[data-cy='add-task-button']");
+
   it("Visits the app root url", () => {
     cy.visit("/");
   });
 
   it("Add task", () => {
-    cy.get("[data-cy='task-items']")
+    taskItems()
       .children()
       .then(e => {
         let startTasksLength = e.length;
 
-        cy.get("[data-cy='add-task-button']")
-          .click()
-          .get("[data-cy='input-time']")
+        openAddTaskContainer().click();
+
+        inputTime()
           .type("10:10")
-          .wait(TIMER_VALIDATION)
-          .get("[data-cy='input-text']")
-          .type("Test")
-          .get("[data-cy='save-task-button']")
-          .click()
-          .get("[data-cy='task-items']")
+          .wait(TIMER_VALIDATION);
+
+        inputText().type("Test");
+
+        saveTaskButton().click();
+
+        taskItems()
           .children()
           .should("have.length", ++startTasksLength);
       });
   });
 
   it("Time validation", () => {
-    cy.get("[data-cy='add-task-button']")
+    openAddTaskContainer()
       .click()
       .wrap(EXAMPLE_TIME_TEST_VALIDATION)
       .each(num => {
         return new Cypress.Promise(resolve => {
-          cy.get("[data-cy='input-time']")
+          inputTime()
             .clear()
             .type(num);
 
           cy.wait(TIMER_VALIDATION);
 
-          cy.get("[data-cy='input-text']").should("be.disabled");
+          inputText().should("be.disabled");
           resolve();
         });
-      })
-      .get("[data-cy='input-time']")
+      });
+
+    inputTime()
       .clear()
       .type("00:00")
-      .wait(TIMER_VALIDATION)
-      .get("[data-cy='input-text']")
-      .should("not.be.disabled")
-      .get("[data-cy='input-time']")
+      .wait(TIMER_VALIDATION);
+
+    inputText().should("not.be.disabled");
+
+    inputTime()
       .clear()
       .wait(500)
-      .type("00:00")
-      .get("[data-cy='input-text']")
+      .type("00:00");
+
+    inputText()
       .should("be.disabled")
       .wait(TIMER_VALIDATION)
       .should("not.be.disabled");
