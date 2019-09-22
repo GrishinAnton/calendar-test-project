@@ -44,8 +44,9 @@ import {
   addMonths,
   getMonth,
   setMonth,
-  format
+  format,
 } from "date-fns";
+
 
 import "./style.sass";
 import "./../../assets/styles/elements/_arrow-button.sass";
@@ -104,14 +105,16 @@ export default {
       return MONTH_LABELS[this.currentMonth];
     },
     dates() {
-      const cursorDate = this.currDateCursor;
-      let startDate = startOfMonth(cursorDate),
-        endDate = lastDayOfMonth(cursorDate);
-      const daysNeededForLastMonth = getDay(startDate),
-        daysNeededForNextMonth =
-          7 - (getDay(endDate) + 1) > 6 ? 0 : 7 - getDay(endDate) - 1;
+      const cursorDate = this.currDateCursor;      
+
+      let startDate = startOfMonth(cursorDate);
+      let endDate = lastDayOfMonth(cursorDate);     
+
+      const daysNeededForLastMonth = getDay(startDate) - 1 < 0 ? 6 : getDay(startDate) - 1;      
+      const daysNeededForNextMonth = getDay(endDate) === 0 ? 0 : 7 - getDay(endDate);      
+
       startDate = addDays(startDate, -daysNeededForLastMonth);
-      endDate = addDays(endDate, daysNeededForNextMonth);
+      endDate = addDays(endDate, daysNeededForNextMonth);      
 
       return eachDayOfInterval({ start: startDate, end: endDate }).map(
         (date, index) => ({
